@@ -18,7 +18,7 @@ class Chisel
 
   def load_input
     @chunks = @markdown.split("\n\n")
-    p @chunks
+    # p @chunks
     parse_it = ParserAssigner.new
     assigned_chunks = []
     @chunks.each do |chunk|
