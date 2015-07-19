@@ -1,66 +1,35 @@
+require 'pry'
+
 class StrongParser
 
-  attr_reader :input, :chunks
+  attr_reader :chunk
 
-  def initialize(input)
-    @input = input
-    @chunks = chunks
+  def initialize(chunk)
+    @chunk = chunk
   end
 
-  def chunkify
-    chunks = input.split("\n\n")
+  def strong
+    chunk.include?("**")
   end
 
-  def asterisk_searcher
-    if chunk.include? ("**")
-      chunk.split
-    else
-      "#{chunk}"
+  def strong_open
+      chunk.sub!("**", "<strong>")
     end
-  end
 
-  def strong_elements
-    chunks.map do |chunk|
-      strong_searcher
-  end
-
-  def strong_array
-    strong_elements.map { |element| strong_parser }
-  end
-
-  def strong?
-    string[0..1] == ("**")
-    # && string[-2..-1] == ("**")
-  end
-
-  def
-    string[2..-1]
-  end
-
-
-  def strong_string
-    element.map do |string|
-      if strong?
-        "<s>#{remove_asterisks}</s>"
-      else
-        "#{string}"
-      end
-  end
+  def strong_close
+      chunk.sub!("**", "</strong>")
+    end
 
   def strong_parser
-    if element == Array
-      strong_string
-    else
-      "#{element}"
+    while strong == true
+      strong_open
+      strong_close
     end
+    @chunk
   end
+end
 
-  def mushify_level_one
-    strong_string.join(" ")
-  end
-
-  def mushify_final
-    strong_elements.join("\n\n")
-  end
-
+if __FILE__ == $0
+  strong = StrongParser.new("**strong**")
+  p strong.strong_parser
 end

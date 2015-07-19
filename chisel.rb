@@ -1,29 +1,70 @@
+
 require 'pry'
-require './header_parser'
+require './parser_assigner'
+
 
 class Chisel
 
-handle = File.open(ARGV[0], 'r')
-markdown_input = handle.read
-handle.close
+  attr_accessor :chunks, :handle, :input
 
-  attr_reader :input, :chunks
-
-  def initialize(input)
-    @input = input
+  def initialize(input=ARGV[0])
+    @handle = File.open(input, "r")
+    @markdown = handle.read
     @chunks = chunks
+    @input = input
+
+
   end
 
   def load_input
-    input
+    @chunks = @markdown.split("\n\n")
+    p @chunks
+    parse_it = ParserAssigner.new
+    assigned_chunks = []
+    @chunks.each do |chunk|
+      if chunk.index("\"") == [0..1]
+        chunk.delete[0..1]
+      else
+        chunk
+      end
+
+      chunk.rstrip
+      assigned_chunks << parse_it.assign_chunk(chunk)
+    end
+    final = assigned_chunks.join("\n\n")
+    html = File.open(ARGV[1],'w+')
+    html.write(final)
+    html.rewind
+    handle.rewind
+    puts "Converted #{input} (#{handle.readlines.count.to_s} lines) to #{ARGV[1]} (#{html.readlines.count.to_s} lines)"
+    handle.close
+    html.close
   end
 
-  def chunkify
-    chunks = input.split("\n\n")
-  end
+  # def assign_parser
+  #
+  #   # parse_it = ParserAssigner.new
+  #   # @chunks.each do |chunk|
+  #   #   chunk.rstrip
+  #   #   assigned_chunks << parse_it.assign_chunk(chunk)
+  #   # end
+  #   # assigned_chunks.join("\n\n")
+  # end
 
+  # def html_output
+  #   assign_parser
+  #   assigned_chunks.join("\n\n")
+  # end
+  # binding.pry
+  # def process_output
+  #   # html = File.open(output,'w+')
+  #   # html.write(assign_parser)
+  #   # html.rewind
+  #   # handle.rewind
+  #   # puts "Converted #{input} (#{handle.readlines.count.to_s} lines) to #{output} (#{html.readlines.count.to_s} lines)"
+  #   # handle.close
+  #   # html.close
+  # end
 end
 
-html_output = File.open(ARGV[1] , 'w')
-html_output.write(markdown)  #eventually call a method that triggers parse.
-html_output.close
+chisel = Chisel.new.load_input

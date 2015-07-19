@@ -1,21 +1,27 @@
 class ParagraphParser
 
-  def chunkify(input)
-    chunked_text = input.split("\n\n")
+  attr_reader :paragraph_parser, :chunk
+
+  def initialize(chunk)
+    @paragraph_parser
+    @chunk = chunk
   end
 
-  def paragraph_parser(chunked_text)
-    paragraphed_chunks = chunked_text.map do |chunk|
-      if chunk[0] != "#"
-        "<p>#{chunk}</p>"
-      else
-        "#{chunk}"
-      end
+  def paragraph?
+    chunk[0] != "#"
+  end
+
+  def paragraph_parser
+    if paragraph?
+      "<p>#{chunk}</p>"
+    else
+      "#{chunk}"
     end
   end
 
-  def mushify(paragraphed_chunks)
-    paragraphed_chunks.join("\n\n")
-  end
+end
 
+if __FILE__ == $0
+  paragraph = ParagraphParser.new
+  p paragraph.paragraph_parser
 end

@@ -4,40 +4,34 @@ require './header_parser'
 
 class HeaderParserTest < Minitest::Test
 
-  # add <p> to this class, too? It's an easy add to the method
-
-  def test_it_splits_input_into_an_array
-    header = HeaderParser.new("# This is a heading!\n\nThis is a paragraph.\n\n# Another heading.\n\nParagraph!")
-    header.chunkify
-    assert_equal ["# This is a heading!", "This is a paragraph.", "# Another heading.", "Paragraph!"], header.chunkify
+  def test_it_places_h1_tags_around_chunks_with_one_hash
+    header = HeaderParser.new("# This is an h1 chunk.")
+    header.header_parser
+    assert_equal "<h1>This is an h1 chunk.</h1>", header.header_parser
   end
 
-  def test_it_does_not_change_paragraph_elements_in_an_array
-    header = HeaderParser.new(["# This is a heading!", "This is a paragraph.", "## Another heading.", "Paragraph!"])
-    header.header_to_html
-    assert_equal ["<h1>This is a heading!</h1>", "This is a paragraph.", "<h2>Another heading.</h2>", "Paragraph!"], header.header_to_html
+  def test_it_places_h2_tags_around_chunks_with_two_hashes
+    header = HeaderParser.new("## This is an h2 chunk.")
+    header.header_parser
+    assert_equal "<h2>This is an h2 chunk.</h2>", header.header_parser
   end
 
-  def test_it_places_h1_tags_around_elements_with_one_hash_in_an_array
-    skip
-    header = HeaderParser.new(["# This is a heading!", "This is a paragraph.", "# Another heading.", "Paragraph!"])
-    header.header_to_html
-    assert_equal ["<h1>This is a heading!</h1>", "This is a paragraph.", "<h1>Another heading.</h1>", "Paragraph!"], header.header_to_html
+  def test_it_places_h3_tags_around_chunks_with_three_hashes
+    header = HeaderParser.new("### This is an h3 chunk.")
+    header.header_parser
+    assert_equal "<h3>This is an h3 chunk.</h3>", header.header_parser
   end
 
-  def test_it_places_h2_tags_around_elements_with_two_hashes_in_an_array
-    skip
-    header = HeaderParser.new(["## This is a heading!", "This is a paragraph.", "# Another heading.", "Paragraph!"])
-    header.header_to_html
-    assert_equal ["<h2>This is a heading!</h2>", "This is a paragraph.", "<h1>Another heading.</h1>", "Paragraph!"], header.header_to_html
+  def test_it_places_h4_tags_around_chunks_with_four_hashes
+    header = HeaderParser.new("#### This is an h4 chunk.")
+    header.header_parser
+    assert_equal "<h4>This is an h4 chunk.</h4>", header.header_parser
   end
 
-  def test_it_joins_array_back_to_string
-    skip
-    header = HeaderParser.new(["<h1>This is a heading!</h1>", "This is a paragraph.", "<h1>Another heading.</h1>", "Paragraph!"])
-    header.mushify
-    assert_equal ("<h1>This is a heading!</h1>\n\nThis is a paragraph.\n\n<h1>Another heading.</h1>\n\nParagraph!"), header.mushify(["<h1>This is a heading!</h1>", "This is a paragraph.", "<h1>Another heading.</h1>", "Paragraph!"])
+  def test_it_does_not_place_h_tags_around_paragraphs
+    header = HeaderParser.new("This is not a header chunk.")
+    header.header_parser
+    assert_equal "This is not a header chunk.", header.header_parser
   end
-
 
 end

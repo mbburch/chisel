@@ -1,13 +1,3 @@
-1. problem will be solved when all markdown text entered into program is returned as properly formatted HTML text.
-2. I want to be able to input a markdown document and receive back a html document.
-
-algorithm:
-level 1
-1. take in text and break into chunks. Chunks don't contain blank lines. Break the text into chunks when program recognizes a blank line (/n/n)
-2. once text is broken into chunks, focus on headings: Turn # into <h1>, etc.
-3. chunks of text that don't start with # are turned into paragraphs: <p>. Set up separate test file for hashes
-
-* look up .index enumerable.
 
 def test_format
 set up the object under test (calc = Calc.new)
@@ -18,42 +8,11 @@ confirm actual matches expected (assert_equal expected, result)
 
 
 
+--Mike said most classes won't need to be initialized. How to safely change @chunk without fucking it up?
+what needs to be initialized? What doesn't?
+
+--when to close File??
 
 
-
-   # 1. chunkify -----> array with elements
-   # 2. if there is a pound sign. add h tags (however much the degree is)
-   # 3. if there is not a h tag, add p tag
-   # 4. find the double stars
-
-
-??=--
-why won't .sub work in header_parser?
-why won't text_start work in header_parser?
-how to access my other methods and refactor in header_parser?
-#how to count from beginning and rule out hashes in middle of string without using a ton of if/else?
-
-
-level 1 Classes:
-class Header
-class Paragraph
-level 2 Classes:
-class Em
-class Strong
-level 3 Classes:
-UL
-OL
-File IO
-
-
-  def header?(chunk)
-    chunk[0] = '#'
-  end
-
-  def text_start(chunk)
-    chunk.index(" ") + 1
-  end
-
-  def text_body
-    [text_start..-1]
-  end
+chisel = Chisel.new
+p chisel.create_html_file
