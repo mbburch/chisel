@@ -22,12 +22,6 @@ class Chisel
     parse_it = ParserAssigner.new
     assigned_chunks = []
     @chunks.each do |chunk|
-      if chunk.index("\"") == [0..1]
-        chunk.delete[0..1]
-      else
-        chunk
-      end
-
       chunk.rstrip
       assigned_chunks << parse_it.assign_chunk(chunk)
     end
