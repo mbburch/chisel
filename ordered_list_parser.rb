@@ -5,7 +5,6 @@ class OrderedListParser
   def initialize(chunk)
     @chunk = chunk
     @ordered_list = " "
-
   end
 
   def ordered_list?

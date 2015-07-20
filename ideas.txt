@@ -13,6 +13,11 @@ what needs to be initialized? What doesn't?
 
 --when to close File??
 
+TO DO:
 
-chisel = Chisel.new
-p chisel.create_html_file
+write TESTS!!!!!!
+make sure each test goes in order of class methods
+make sure each test is uniform looking
+make sure each class is uniform looking
+DRY.
+refactor- divide chisel and bring back fileio

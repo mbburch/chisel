@@ -29,7 +29,7 @@ class HeaderParser
 
   def header_parser
     if header?
-      "<h#{header_number}>#{text_body}</h#{header_number}>"
+      "<h#{header_number}>#{text_body.strip}</h#{header_number}>"
     else
       "#{chunk}"
     end

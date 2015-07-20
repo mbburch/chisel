@@ -12,11 +12,7 @@ class ParagraphParser
   end
 
   def paragraph_parser
-    if paragraph?
-      "<p>#{chunk}</p>"
-    else
-      "#{chunk}"
-    end
+    "<p>#{chunk.strip}</p>"
   end
 
 end
