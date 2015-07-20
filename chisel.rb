@@ -22,6 +22,7 @@ class Chisel
   def assign_parser
     parse_it = ParserAssigner.new
     @chunks.each do |chunk|
+      chunk.rstrip
       assigned_chunks << parse_it.assign_chunk(chunk)
     end
   end
