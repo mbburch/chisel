@@ -1,12 +1,12 @@
-require 'pry'
-require './parser_assigner'
-require './fileio'
-
-file = FileIO.new
-parser = ParserAssigner.new
-
-input_string = file.read_input
-parser.make_array(input_string)
+# require 'pry'
+# require './parser_assigner'
+# require './fileio'
+#
+# file = FileIO.new
+# parser = ParserAssigner.new
+#
+# input_string = file.read_input
+# parser.make_array(input_string)
 
 # class Chisel
 #
